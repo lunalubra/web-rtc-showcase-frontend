@@ -1,14 +1,33 @@
 import { Flex, Grid, GridItem } from '@chakra-ui/layout';
+import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import ActiveUserList from '../components/ActiveUserList';
 import * as webRTCHandler from '../utils/webRTC/webRTCHandler';
+import ActiveUserList from '../components/ActiveUserList';
 import DirectCall from '../components/DirectCall';
+import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react';
 
 export default function DashboardPage() {
   useEffect(() => {
     webRTCHandler.getLocalStream();
   }, []);
+
+  const { username } = useSelector((state) => state.dashboard);
+  const toast = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!username) {
+      toast({
+        title: 'Disconnected',
+        status: 'info',
+        duration: 9000,
+        isClosable: true
+      });
+      router.push('/');
+    }
+  }, [username]);
 
   return (
     <Flex
