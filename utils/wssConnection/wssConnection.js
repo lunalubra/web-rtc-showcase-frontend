@@ -4,7 +4,7 @@ import * as dashboardActions from '../../redux/actions/dashboard.actions';
 import * as webRTCHandler from '../webRTC/webRTCHandler';
 import store from '../../redux/store';
 
-const SERVER = 'serene-sands-45700.herokuapp.com ';
+const SERVER = 'https://serene-sands-45700.herokuapp.com/';
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
