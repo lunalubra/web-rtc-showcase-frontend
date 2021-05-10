@@ -1,16 +1,21 @@
 import { Flex, Grid, GridItem } from '@chakra-ui/layout';
-import { useSelector } from 'react-redux';
+import { useToast } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import { resetCallDataState } from '../redux/actions/call.actions';
 import * as webRTCHandler from '../utils/webRTC/webRTCHandler';
 import ActiveUserList from '../components/ActiveUserList';
 import DirectCall from '../components/DirectCall';
-import { useRouter } from 'next/router';
-import { useToast } from '@chakra-ui/react';
 
 export default function DashboardPage() {
+  const dispatch = useDispatch();
   useEffect(() => {
     webRTCHandler.getLocalStream();
+    () => {
+      dispatch(resetCallDataState);
+    };
   }, []);
 
   const { username } = useSelector((state) => state.dashboard);
@@ -48,7 +53,7 @@ export default function DashboardPage() {
           maxH={['100vh', '100%']}
           rowSpan={2}
           colSpan={[1, 4]}
-          bg="blue.900"
+          bg="blue.400"
         >
           <DirectCall />
         </GridItem>
@@ -59,7 +64,7 @@ export default function DashboardPage() {
           minH="100%"
           maxH="100px"
           overflowY="auto"
-          bg="papayawhip"
+          bg="white"
         >
           <ActiveUserList />
         </GridItem>
